@@ -1,7 +1,9 @@
-(ns parking-lot.input.parser)
+(ns parking-lot.input.parser
+  (:require [clojure.string :as str]))
 
 (defn parse [input]
-  {:command ""
-   :arguments []
-   :result ""
-   :valid? true})
+  (let [parsed-input (str/split input #" ")]
+    {:command   (first parsed-input)
+     :arguments (rest parsed-input)
+     :result    ""
+     :valid?    true}))
