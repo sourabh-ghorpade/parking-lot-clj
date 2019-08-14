@@ -1,6 +1,6 @@
 # parking_lot
 
-A Clojure library designed to ... well, that part is up to you.
+A Clojure library designed to park cars and show stats on them.
 
 ## Usage
 

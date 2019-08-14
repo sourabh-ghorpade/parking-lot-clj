@@ -1,6 +1,14 @@
-(ns parking-lot.core)
+(ns parking-lot.core
+  (:require [parking-lot.input.processor :as processor])
+  (:gen-class))
 
-(defn foo
-  "I don't do a whole lot."
-  [x]
-  (println x "Hello, World!"))
+
+(defn -main
+  ([]
+   (loop [input (read-line)]
+     (if-not (= input "exit")
+       (do
+         (processor/process input)
+         (recur (read-line))))))
+  ([args]
+   (println args)))
