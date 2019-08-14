@@ -4,7 +4,8 @@
             [parking-lot.command.executor :as executor]))
 
 (defn process [input]
-  (-> (parser/parse input)
+  (-> input
+      (parser/parse)
       (validator/validate)
       (executor/execute)
       (:result)

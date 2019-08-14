@@ -6,9 +6,8 @@
 (defn validate [command-arguments-option]
   (if-not (:valid? command-arguments-option)
     command-arguments-option
-    (let [argument-count (count (:arguments command-arguments-option))
-          command-name (:command command-arguments-option)
-          input-command {:name command-name :argument-count argument-count}]
+    (let [input-command {:name (:command command-arguments-option)
+                         :argument-count (count (:arguments command-arguments-option))}]
       (if (some #(= % input-command) commands)
         command-arguments-option
         (option-builder/create-invalid-option "Invalid Command/Arguments")))))
