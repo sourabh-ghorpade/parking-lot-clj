@@ -9,3 +9,8 @@
 (defn create-invalid-option [result]
   {:result result
    :valid? false})
+
+(defmacro if-valid [option function]
+  `(if (:valid? ~option)
+    (~function ~option)
+    ~option))
