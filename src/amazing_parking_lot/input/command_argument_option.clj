@@ -1,4 +1,4 @@
-(ns parking-lot.input.command-argument-option)
+(ns amazing-parking-lot.input.command-argument-option)
 
 (defn create-valid-option [command arguments result]
   {:command   command

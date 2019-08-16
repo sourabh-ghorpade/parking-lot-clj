@@ -1,6 +1,6 @@
-(ns parking-lot.input.parser
+(ns amazing-parking-lot.input.parser
   (:require [clojure.string :as str]
-            [parking-lot.input.command-argument-option :as option]))
+            [amazing-parking-lot.input.command-argument-option :as option]))
 
 (defn parse [input]
   (if input

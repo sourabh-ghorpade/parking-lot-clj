@@ -1,6 +1,6 @@
-(ns parking-lot.input.parser-test
+(ns amazing-parking-lot.input.parser-test
   (:require [clojure.test :refer :all])
-  (:require [parking-lot.input.parser :refer :all]))
+  (:require [amazing-parking-lot.input.parser :refer :all]))
 
 (deftest parse-test
   (testing "when the input has a command and arguments"

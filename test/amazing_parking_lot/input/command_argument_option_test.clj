@@ -1,7 +1,7 @@
-(ns parking-lot.input.command-argument-option-test
+(ns amazing-parking-lot.input.command-argument-option-test
   (:require [clojure.test :refer :all]
-            [parking-lot.input.command-argument-option :refer :all]
-            [parking-lot.input.command-argument-option :as option]))
+            [amazing-parking-lot.input.command-argument-option :refer :all]
+            [amazing-parking-lot.input.command-argument-option :as option]))
 
 (deftest if-valid-test
   (testing "when the option is valid"

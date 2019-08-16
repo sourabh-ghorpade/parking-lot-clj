@@ -1,5 +1,5 @@
-(ns parking-lot.command.validator
-  (:require [parking-lot.input.command-argument-option :as option-builder]))
+(ns amazing-parking-lot.command.validator
+  (:require [amazing-parking-lot.input.command-argument-option :as option-builder]))
 
 (def commands [{:name "create_parking_lot" :argument-count 1}])
 

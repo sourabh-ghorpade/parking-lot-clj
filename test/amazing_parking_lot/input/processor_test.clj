@@ -1,7 +1,7 @@
-(ns parking-lot.input.processor-test
+(ns amazing-parking-lot.input.processor-test
   (:require [clojure.test :refer :all]
-            [parking-lot.input.command-argument-option :refer :all])
-  (:require [parking-lot.input.processor :refer [process]]))
+            [amazing-parking-lot.input.command-argument-option :refer :all])
+  (:require [amazing-parking-lot.input.processor :refer [process]]))
 
 (deftest process-test
   (testing "when the input is valid"
@@ -12,11 +12,11 @@
             valid-option (create-valid-option "some-command" "6" expected-result)
             executor-called? (atom false)
             input "some-command 6"]
-        (with-redefs [parking-lot.input.parser/parse (fn [_] (reset! parser-called? true)
+        (with-redefs [amazing-parking-lot.input.parser/parse (fn [_] (reset! parser-called? true)
                                                        valid-option)
-                      parking-lot.command.validator/validate (fn [_] (reset! validator-called? true)
+                      amazing-parking-lot.command.validator/validate (fn [_] (reset! validator-called? true)
                                                                valid-option)
-                      parking-lot.command.executor/execute (fn [_] (do (reset! executor-called? true)
+                      amazing-parking-lot.command.executor/execute (fn [_] (do (reset! executor-called? true)
                                                                        valid-option))]
           (is (= (process input) expected-result))
           (is (true? (and @parser-called? @validator-called? @executor-called?)))))))
@@ -25,7 +25,7 @@
       (let [validator-called? (atom false)
             executor-called? (atom false)
             expected-result "Input is empty"]
-        (with-redefs [parking-lot.command.validator/validate (fn [_] (reset! validator-called? true))
-                      parking-lot.command.executor/execute (fn [_] (reset! executor-called? true))]
+        (with-redefs [amazing-parking-lot.command.validator/validate (fn [_] (reset! validator-called? true))
+                      amazing-parking-lot.command.executor/execute (fn [_] (reset! executor-called? true))]
           (is (= (process nil) expected-result))
           (is (false? (and @validator-called? @executor-called?))))))))

@@ -1,5 +1,5 @@
-(ns parking-lot.core
-  (:require [parking-lot.input.processor :as processor])
+(ns amazing-parking-lot.core
+  (:require [amazing-parking-lot.input.processor :as processor])
   (:gen-class))
 
 

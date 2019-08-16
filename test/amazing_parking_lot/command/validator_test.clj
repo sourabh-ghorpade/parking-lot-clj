@@ -1,8 +1,8 @@
-(ns parking-lot.command.validator-test
+(ns amazing-parking-lot.command.validator-test
   (:require [clojure.test :refer :all]
-            [parking-lot.input.command-argument-option :as option-builder]
-            [parking-lot.command.validator :refer [validate]]
-            [parking-lot.input.command-argument-option :as option]))
+            [amazing-parking-lot.input.command-argument-option :as option-builder]
+            [amazing-parking-lot.command.validator :refer [validate]]
+            [amazing-parking-lot.input.command-argument-option :as option]))
 
 (defn- validations-failed? [validated-option]
   (and (not (:valid? validated-option))
