@@ -1,8 +1,8 @@
 (ns parking-lot.input.command-argument-option)
 
-(defn create-valid-option [command argument result]
+(defn create-valid-option [command arguments result]
   {:command   command
-   :arguments argument
+   :arguments arguments
    :result    result
    :valid?    true})
 
@@ -10,10 +10,22 @@
   {:result result
    :valid? false})
 
+(defmacro if-valid [option function]
+  `(if (:valid? ~option)
+     (~function ~option)
+     ~option))
+
 (defn result [option]
   (:result option))
 
-(defmacro if-valid [option function]
-  `(if (:valid? ~option)
-    (~function ~option)
-    ~option))
+(defn command [option]
+  (:command option))
+
+(defn arguments [option]
+  (:arguments option))
+
+(defn create-valid-with-result [option result]
+  (create-valid-option (command option)
+                       (arguments option)
+                       result))
+

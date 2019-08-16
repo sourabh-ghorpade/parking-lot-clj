@@ -18,7 +18,23 @@
             result (if-valid invalid-option test-fn)]
         (is (= result invalid-option))))))
 
+(deftest create-valid-with-result-test
+  (testing "returns an option using the existing option and the provided result"
+    (let [option (create-valid-option "some-command" ["23"] "")
+          new-option (create-valid-with-result option "new-result")]
+      (is (= (option/result new-option) "new-result")))))
+
 (deftest result-test
   (testing "returns the result of the option"
-    (let [option (create-valid-option "some-command" "23" "result")]
+    (let [option (create-valid-option "some-command" ["23"] "result")]
       (is (= (option/result option) "result")))))
+
+(deftest command-test
+  (testing "returns the command of the option"
+    (let [option (create-valid-option "some-command" ["23"] "result")]
+      (is (= (option/command option) "some-command")))))
+
+(deftest arguments-test
+  (testing "returns the arguments of the option"
+    (let [option (create-valid-option "some-command" ["23"] "result")]
+      (is (= (option/arguments option) ["23"])))))
