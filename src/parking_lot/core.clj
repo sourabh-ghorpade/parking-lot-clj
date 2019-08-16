@@ -8,7 +8,7 @@
    (loop [input (read-line)]
      (if-not (= input "exit")
        (do
-         (processor/process input)
+         (println (processor/process input))
          (recur (read-line))))))
   ([args]
    (println args)))

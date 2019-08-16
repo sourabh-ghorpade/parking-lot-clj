@@ -10,6 +10,9 @@
   {:result result
    :valid? false})
 
+(defn result [option]
+  (:result option))
+
 (defmacro if-valid [option function]
   `(if (:valid? ~option)
     (~function ~option)

@@ -1,6 +1,7 @@
 (ns parking-lot.input.command-argument-option-test
   (:require [clojure.test :refer :all]
-            [parking-lot.input.command-argument-option :refer :all]))
+            [parking-lot.input.command-argument-option :refer :all]
+            [parking-lot.input.command-argument-option :as option]))
 
 (deftest if-valid-test
   (testing "when the option is valid"
@@ -16,3 +17,8 @@
             invalid-option (create-invalid-option "some-result")
             result (if-valid invalid-option test-fn)]
         (is (= result invalid-option))))))
+
+(deftest result-test
+  (testing "returns the result of the option"
+    (let [option (create-valid-option "some-command" "23" "result")]
+      (is (= (option/result option) "result")))))
