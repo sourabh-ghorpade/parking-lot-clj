@@ -21,7 +21,7 @@
                       amazing-parking-lot.command.executor/execute (fn [_] (do (reset! executor-called? true)
                                                                        valid-option))]
           (let [result-option (process input nil)]
-            (is (= (result result-option) expected-result))
+            (is (= (message result-option) expected-result))
             (is (= (parking-lot result-option) input-parking-lot)))
           (is (true? (and @parser-called? @validator-called? @executor-called?)))))))
   (testing "when the input cannot be parsed"
@@ -31,5 +31,5 @@
             expected-result "Input is empty"]
         (with-redefs [amazing-parking-lot.command.validator/validate (fn [_] (reset! validator-called? true))
                       amazing-parking-lot.command.executor/execute (fn [_] (reset! executor-called? true))]
-          (is (= (result (process nil nil)) expected-result))
+          (is (= (message (process nil nil)) expected-result))
           (is (false? (and @validator-called? @executor-called?))))))))

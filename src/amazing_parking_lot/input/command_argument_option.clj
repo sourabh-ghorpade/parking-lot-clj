@@ -1,7 +1,7 @@
 (ns amazing-parking-lot.input.command-argument-option)
 
-(defn result [option]
-  (:result option))
+(defn message [option]
+  (:message option))
 
 (defn command [option]
   (:command option))
@@ -16,17 +16,17 @@
   ([command arguments]
    {:command   command
     :arguments arguments
-    :result    ""
+    :message    ""
     :valid?    true})
   ([option result parking-lot]
    {:command     (command option)
     :arguments   (arguments option)
-    :result      result
+    :message      result
     :parking-lot parking-lot
     :valid?      true}))
 
 (defn create-invalid-option [result]
-  {:result result
+  {:message result
    :valid? false})
 
 (defmacro if-valid [option function]
@@ -37,7 +37,7 @@
 (defn create-valid-option-with-parking-lot [option parking-lot]
   {:command     (command option)
    :arguments   (arguments option)
-   :result      (result option)
+   :message      (message option)
    :valid?      true
    :parking-lot parking-lot})
 

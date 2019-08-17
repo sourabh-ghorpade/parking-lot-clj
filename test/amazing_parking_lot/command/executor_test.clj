@@ -9,5 +9,5 @@
     (with-redefs [parking-lot/create (fn [_] :expected-parking-lot)]
       (let [create-command (create-valid-option "create_parking_lot" [6])
             resulting-option (execute create-command)]
-        (is (= (result resulting-option) "Created parking lot with 6 slots"))
+        (is (= (message resulting-option) "Created parking lot with 6 slots"))
         (is (= (parking-lot resulting-option) :expected-parking-lot))))))

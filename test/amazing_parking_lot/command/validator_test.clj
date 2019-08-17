@@ -6,7 +6,7 @@
 
 (defn- validations-failed? [validated-option]
   (and (not (:valid? validated-option))
-       (= "Invalid Command/Arguments" (option/result validated-option))))
+       (= "Invalid Command/Arguments" (option/message validated-option))))
 
 (deftest validate-test
   (testing "When the command is a valid command"

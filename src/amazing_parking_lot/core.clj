@@ -11,7 +11,7 @@
      (if-not (= input "exit")
        (do
          (let [result-option (processor/process input previous-result-option)]
-           (println (option/result result-option))
+           (println (option/message result-option))
            (recur (read-line) result-option))))))
   ([args]
    (println args)))

@@ -22,9 +22,9 @@
   (testing "returns the result of the option"
     (let [option {:command   command
                   :arguments arguments
-                  :result    "result"
+                  :message    "result"
                   :valid?    true}]
-      (is (= (option/result option) "result")))))
+      (is (= (option/message option) "result")))))
 
 (deftest command-test
   (testing "returns the command of the option"
@@ -44,9 +44,9 @@
 
 (deftest parking-lot-test
   (testing "returns the parking lot of the option"
-    (let [option {:command   command
-                  :arguments arguments
-                  :result    result
-                  :valid?    true
+    (let [option {:command     command
+                  :arguments   arguments
+                  :message      message
+                  :valid?      true
                   :parking-lot {:slots 10}}]
       (is (= (option/parking-lot option) {:slots 10})))))
