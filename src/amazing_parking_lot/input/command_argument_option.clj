@@ -18,15 +18,15 @@
     :arguments arguments
     :message    ""
     :valid?    true})
-  ([option result parking-lot]
+  ([option message parking-lot]
    {:command     (command option)
     :arguments   (arguments option)
-    :message      result
+    :message      message
     :parking-lot parking-lot
     :valid?      true}))
 
-(defn create-invalid-option [result]
-  {:message result
+(defn create-invalid-option [message]
+  {:message message
    :valid? false})
 
 (defmacro if-valid [option function]

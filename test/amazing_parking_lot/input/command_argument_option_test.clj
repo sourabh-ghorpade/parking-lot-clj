@@ -14,17 +14,17 @@
   (testing "when the option is invalid"
     (testing "it returns the invalid option"
       (let [test-fn (constantly true)
-            invalid-option (create-invalid-option "some-result")
+            invalid-option (create-invalid-option "some-message")
             result (if-valid invalid-option test-fn)]
         (is (= result invalid-option))))))
 
-(deftest result-test
-  (testing "returns the result of the option"
+(deftest message-test
+  (testing "returns the message of the option"
     (let [option {:command   command
                   :arguments arguments
-                  :message    "result"
+                  :message   "some message"
                   :valid?    true}]
-      (is (= (option/message option) "result")))))
+      (is (= (option/message option) "some message")))))
 
 (deftest command-test
   (testing "returns the command of the option"
@@ -46,7 +46,7 @@
   (testing "returns the parking lot of the option"
     (let [option {:command     command
                   :arguments   arguments
-                  :message      message
+                  :message     message
                   :valid?      true
                   :parking-lot {:slots 10}}]
       (is (= (option/parking-lot option) {:slots 10})))))

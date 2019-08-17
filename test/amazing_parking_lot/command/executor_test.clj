@@ -5,7 +5,7 @@
             [amazing-parking-lot.input.command-argument-option :refer :all]))
 
 (deftest execute-test
-  (testing "it executes the command and sets the result"
+  (testing "it executes the command and sets the message and parking lot"
     (with-redefs [parking-lot/create (fn [_] :expected-parking-lot)]
       (let [create-command (create-valid-option "create_parking_lot" [6])
             resulting-option (execute create-command)]

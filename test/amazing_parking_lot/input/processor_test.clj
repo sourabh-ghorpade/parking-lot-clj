@@ -9,9 +9,9 @@
     (testing "it calls the parser, validator, executor and then returns the result"
       (let [parser-called? (atom false)
             validator-called? (atom false)
-            expected-result "Success"
+            expected-message "Success"
             input-parking-lot (atom :parking-lot)
-            valid-option (create-valid-option (create-valid-option "some-command" "6") expected-result input-parking-lot)
+            valid-option (create-valid-option (create-valid-option "some-command" "6") expected-message input-parking-lot)
             executor-called? (atom false)
             input "some-command 6"]
         (with-redefs [amazing-parking-lot.input.parser/parse (fn [_] (reset! parser-called? true)
@@ -21,7 +21,7 @@
                       amazing-parking-lot.command.executor/execute (fn [_] (do (reset! executor-called? true)
                                                                        valid-option))]
           (let [result-option (process input nil)]
-            (is (= (message result-option) expected-result))
+            (is (= (message result-option) expected-message))
             (is (= (parking-lot result-option) input-parking-lot)))
           (is (true? (and @parser-called? @validator-called? @executor-called?)))))))
   (testing "when the input cannot be parsed"
