@@ -38,3 +38,18 @@
   (testing "returns the arguments of the option"
     (let [option (create-valid-option "some-command" ["23"] "result")]
       (is (= (option/arguments option) ["23"])))))
+
+(deftest create-valid-option-with-parking-lot-test
+  (testing "returns the parking lot of the option"
+    (let [option (create-valid-option-with-parking-lot (create-valid-option "some-command" ["23"] "result")
+                                                       {:slots 10})]
+      (is (= (option/parking-lot option) {:slots 10})))))
+
+(deftest parking-lot-test
+  (testing "returns the parking lot of the option"
+    (let [option {:command   command
+                  :arguments arguments
+                  :result    result
+                  :valid?    true
+                  :parking-lot {:slots 10}}]
+      (is (= (option/parking-lot option) {:slots 10})))))

@@ -24,6 +24,16 @@
 (defn arguments [option]
   (:arguments option))
 
+(defn parking-lot [option]
+  (:parking-lot option))
+
+(defn create-valid-option-with-parking-lot [option parking-lot]
+  {:command     (command option)
+   :arguments   (arguments option)
+   :result      (result option)
+   :valid?      true
+   :parking-lot parking-lot})
+
 (defn create-valid-with-result [option result]
   (create-valid-option (command option)
                        (arguments option)
