@@ -9,7 +9,8 @@
       (let [parser-called? (atom false)
             validator-called? (atom false)
             expected-result "Success"
-            valid-option (create-valid-option "some-command" "6" expected-result)
+            parking-lot (atom :parking-lot)
+            valid-option (create-valid-option (create-valid-option "some-command" "6") expected-result parking-lot)
             executor-called? (atom false)
             input "some-command 6"]
         (with-redefs [amazing-parking-lot.input.parser/parse (fn [_] (reset! parser-called? true)

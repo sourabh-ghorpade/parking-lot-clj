@@ -5,5 +5,5 @@
 (defn parse [input]
   (if input
     (let [parsed-input (str/split input #" ")]
-      (option/create-valid-option (first parsed-input) (rest parsed-input) ""))
+      (option/create-valid-option (first parsed-input) (rest parsed-input)))
     (option/create-invalid-option "Input is empty")))
