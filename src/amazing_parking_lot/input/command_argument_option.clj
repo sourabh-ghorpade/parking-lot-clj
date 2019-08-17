@@ -23,8 +23,7 @@
     :arguments   (arguments option)
     :result      result
     :parking-lot parking-lot
-    :valid?      true})
-  )
+    :valid?      true}))
 
 (defn create-invalid-option [result]
   {:result result
