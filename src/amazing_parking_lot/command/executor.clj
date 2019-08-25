@@ -11,7 +11,8 @@
 (defn- park [command-arguments]
   (let [licence-number (first (option/arguments command-arguments))
         color (second (option/arguments command-arguments))
-        response (parking-lot/park licence-number color)
+        parking-lot (option/parking-lot command-arguments)
+        response (parking-lot/park licence-number color parking-lot)
         message (:message response)
         parking-lot (:parking-lot response)]
     (option/create-valid-option command-arguments message parking-lot)))
