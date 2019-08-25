@@ -1,4 +1,4 @@
-(ns amazing-parking-lot.parking-lot.parking-lot)
+(ns amazing-parking-lot.models.parking-lot)
 
 (defn create [number-of-slots]
   {:number-of-slots number-of-slots})

@@ -1,7 +1,7 @@
 (ns amazing-parking-lot.command.executor-test
   (:require [clojure.test :refer :all]
             [amazing-parking-lot.command.executor :refer :all]
-            [amazing-parking-lot.parking-lot.parking-lot :as parking-lot]
+            [amazing-parking-lot.models.parking-lot :as parking-lot]
             [amazing-parking-lot.input.command-argument-option :refer :all]))
 
 (deftest execute-test

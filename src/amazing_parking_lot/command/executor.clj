@@ -1,6 +1,6 @@
 (ns amazing-parking-lot.command.executor
   (:require [amazing-parking-lot.input.command-argument-option :as option]
-            [amazing-parking-lot.parking-lot.parking-lot :as parking-lot]))
+            [amazing-parking-lot.models.parking-lot :as parking-lot]))
 
 (defn- create-parking-lot [command-arguments]
   (let [number-of-slots (first (option/arguments command-arguments))

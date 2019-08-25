@@ -1,6 +1,6 @@
-(ns amazing-parking-lot.parking-lot.parking-lot-test
+(ns amazing-parking-lot.models.parking-lot-test
   (:require [clojure.test :refer :all])
-  (:require [amazing-parking-lot.parking-lot.parking-lot :refer :all]))
+  (:require [amazing-parking-lot.models.parking-lot :refer :all]))
 
 (deftest create-test
   (testing "creates a parking lot with the given slots"
