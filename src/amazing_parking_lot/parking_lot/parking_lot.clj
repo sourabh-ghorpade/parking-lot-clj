@@ -2,3 +2,5 @@
 
 (defn create [number-of-slots]
   {:number-of-slots number-of-slots})
+
+(defn park [licence-number color])
