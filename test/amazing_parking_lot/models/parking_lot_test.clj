@@ -5,12 +5,14 @@
 
 (deftest create-test
   (testing "creates a parking lot with the given slots"
-    (is (= (create 6) {:number-of-slots 6}))))
+    (let [value (create 3)]
+      (is (= value {:number-of-slots 3
+                    :slots           [{} {} {}]})))))
 
 (deftest park-test
-  (let [parking-lot {:number-of-slots 6}
+  (let [parking-lot (create 3)
         car (car/create "ABC" "white")
         result (park car parking-lot)]
-    (is (and (= (:message result) "Parked in slot number 1")
-             (= (:parking-lot result) {:number-of-slots 6
-                                       :slots           [car]})))))
+    (is (= (:message result) "Parked in slot number 1"))
+    (is (= (:parking-lot result) {:number-of-slots 3
+                                  :slots           [car]}))))
