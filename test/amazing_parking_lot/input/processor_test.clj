@@ -11,17 +11,21 @@
             validator-called? (atom false)
             expected-message "Success"
             input-parking-lot (atom :parking-lot)
-            valid-option (create-valid-option (create-valid-option "some-command" "6") expected-message input-parking-lot)
+            parsed-option (create-valid-option "park" ["White" "KA-12"])
             executor-called? (atom false)
+            expected-result-option (create-valid-option parsed-option expected-message input-parking-lot)
             input "some-command 6"]
         (with-redefs [amazing-parking-lot.input.parser/parse (fn [_] (reset! parser-called? true)
-                                                       valid-option)
-                      amazing-parking-lot.command.validator/validate (fn [_] (reset! validator-called? true)
-                                                               valid-option)
-                      amazing-parking-lot.command.executor/execute (fn [_] (do (reset! executor-called? true)
-                                                                       valid-option))]
-          (let [result-option (process input nil)]
-            (is (= (message result-option) expected-message))
+                                                       parsed-option)
+                      amazing-parking-lot.command.validator/validate (fn [input-option] (reset! validator-called? true)
+                                                                       input-option)
+                      amazing-parking-lot.command.executor/execute (fn [option]
+                                                                     (if (option/parking-lot option)
+                                                                       (do (reset! executor-called? true)
+                                                                           expected-result-option)
+                                                                       (create-invalid-option "No Parking Lot")))]
+          (let [result-option (process input input-parking-lot)]
+            (is (= expected-message (message result-option)))
             (is (= (parking-lot result-option) input-parking-lot)))
           (is (true? (and @parser-called? @validator-called? @executor-called?)))))))
   (testing "when the input cannot be parsed"

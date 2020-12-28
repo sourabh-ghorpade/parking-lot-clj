@@ -7,11 +7,11 @@
 (defn -main
   ([]
    (loop [input (read-line)
-          previous-result-option nil]
+          parking-lot nil]
      (if-not (= input "exit")
        (do
-         (let [result-option (processor/process input previous-result-option)]
+         (let [result-option (processor/process input parking-lot)]
            (println (option/message result-option))
-           (recur (read-line) result-option))))))
+           (recur (read-line) (option/parking-lot result-option)))))))
   ([args]
    (println args)))

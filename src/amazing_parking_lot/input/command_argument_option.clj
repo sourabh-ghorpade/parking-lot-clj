@@ -41,4 +41,7 @@
    :valid?      true
    :parking-lot parking-lot})
 
+(defn add-parking-lot [option parking-lot]
+  (assoc option :parking-lot parking-lot))
+
 
