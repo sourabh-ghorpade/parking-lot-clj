@@ -7,11 +7,11 @@
 (deftest execute-test
   (testing "when the command is create parking lot"
     (testing "it executes the command and sets the message and parking lot"
-      (with-redefs [parking-lot/create (fn [_] :expected-parking-lot)]
-        (let [create-command (create-valid-option "create_parking_lot" [6])
-              resulting-option (execute create-command)]
-          (is (= (message resulting-option) "Created parking lot with 6 slots"))
-          (is (= (parking-lot resulting-option) :expected-parking-lot))))))
+      (let [create-command (create-valid-option "create_parking_lot" ["6"])
+            resulting-option (execute create-command)
+            expected-parking-lot {:number-of-slots 6, :slots [nil nil nil nil nil nil]}]
+        (is (= (message resulting-option) "Created parking lot with 6 slots"))
+        (is (= (parking-lot resulting-option) expected-parking-lot)))))
 
   (testing "when the command is park a car"
     (testing "it executes the command and sets the message and updated parking lot"

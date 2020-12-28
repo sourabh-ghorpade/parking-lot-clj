@@ -5,7 +5,7 @@
 
 (defn- create-parking-lot [command-arguments]
   (let [number-of-slots (first (option/arguments command-arguments))
-        parking-lot (parking-lot/create number-of-slots)
+        parking-lot (parking-lot/create (Integer/parseInt number-of-slots))
         message (str "Created parking lot with " number-of-slots " slots")]
     (option/create-valid-option command-arguments message parking-lot)))
 
