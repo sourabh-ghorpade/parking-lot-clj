@@ -2,7 +2,8 @@
   (:require [amazing-parking-lot.input.command-argument-option :as option-builder]))
 
 (def commands [{:name "create_parking_lot" :argument-count 1}
-               {:name "park" :argument-count 2}])
+               {:name "park" :argument-count 2}
+               {:name "leave" :argument-count 1}])
 
 (defn validate [command-arguments-option]
   (let [input-command {:name           (:command command-arguments-option)

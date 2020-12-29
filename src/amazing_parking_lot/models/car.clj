@@ -5,3 +5,6 @@
    :color          color
    :license-number licence-number
    })
+
+(defn get-license-number [car]
+  (:license-number car))

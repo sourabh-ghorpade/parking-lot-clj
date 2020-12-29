@@ -40,3 +40,15 @@
           (is (= (:message result) "Parking Lot is full"))
           (is (= (:parking-lot result) {:number-of-slots 1
                                         :slots           (vec [car_one])})))))))
+
+(deftest leave-test
+  (testing "when the slot number is valid"
+    (testing "when there is a car against the given slot number"
+      (testing "it returns the car"
+        (let [car_one (car/create "ABC" "white")
+              parking-lot {:number-of-slots 1
+                           :slots           (vec [car_one])}
+              result (leave "1" parking-lot)]
+          (is (= (:message result) "Un-Parked Car ABC at slot 1"))
+          (is (= (:parking-lot result) {:number-of-slots 1
+                                        :slots           (vec [])})))))))
