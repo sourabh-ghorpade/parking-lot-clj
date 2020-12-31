@@ -44,11 +44,19 @@
 (deftest leave-test
   (testing "when the slot number is valid"
     (testing "when there is a car against the given slot number"
-      (testing "it returns the car and frees the slot"
+      (testing "it un-parks the car with a message and frees the slot"
         (let [car_one (car/create "ABC" "white")
               parking-lot {:number-of-slots 1
-                           :slots           (vec [car_one])}
+                           :slots           [car_one]}
               leave-result (leave "1" parking-lot)]
           (is (= (:message leave-result) "Un-Parked Car ABC at slot 1"))
           (is (= (:parking-lot leave-result) {:number-of-slots 1
-                                              :slots           (vec [nil])})))))))
+                                              :slots           [nil]})))))
+    (testing "when there is no car against the given slot number"
+      (testing "it returns error"
+        (let [parking-lot {:number-of-slots 1
+                           :slots           [nil]}
+              leave-result (leave "1" parking-lot)]
+          (is (= (:message leave-result) "No car parked at the given slot"))
+          (is (= (:parking-lot leave-result) {:number-of-slots 1
+                                              :slots           [nil]})))))))

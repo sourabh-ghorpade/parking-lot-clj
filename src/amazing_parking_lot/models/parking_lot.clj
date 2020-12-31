@@ -15,12 +15,15 @@
             (subvec coll (inc i)))))
 
 (defn leave [slot-number parking-lot]
-  (let [formatted-slot-number (- (Integer/parseInt slot-number) 1)
-        car-to-be-removed (.get (:slots parking-lot) formatted-slot-number)
-        updated-parking-lot (assoc parking-lot :slots (remove-car formatted-slot-number parking-lot))
-        licence-number (car/get-license-number car-to-be-removed)]
-    {:message     (format "Un-Parked Car %s at slot %s" licence-number slot-number)
-     :parking-lot updated-parking-lot}))
+  (let [formatted-slot-number (dec (Integer/parseInt slot-number))
+        car-to-be-removed (.get (:slots parking-lot) formatted-slot-number)]
+    (if-not car-to-be-removed
+      {:message     "No car parked at the given slot"
+       :parking-lot parking-lot}
+      (let [updated-parking-lot (assoc parking-lot :slots (remove-car formatted-slot-number parking-lot))
+            licence-number (car/get-license-number car-to-be-removed)]
+        {:message     (format "Un-Parked Car %s at slot %s" licence-number slot-number)
+         :parking-lot updated-parking-lot}))))
 
 (defn park [car parking-lot]
   (let [free-slot-number (.indexOf (:slots parking-lot) nil)
