@@ -8,8 +8,10 @@
 ;TODO Find better way to do this in clj
 (defn remove-car [slot-number parking-lot]
   (let [coll (:slots parking-lot)
-        i slot-number]
+        i slot-number
+        empty-slot [nil]]
     (concat (subvec coll 0 i)
+            empty-slot
             (subvec coll (inc i)))))
 
 (defn leave [slot-number parking-lot]
