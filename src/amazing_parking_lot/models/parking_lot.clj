@@ -21,9 +21,10 @@
      :parking-lot updated-parking-lot}))
 
 (defn park [car parking-lot]
-  (let [free-slot-number (.indexOf (:slots parking-lot) nil)]
-    (if (not (= free-slot-number -1))
-      {:message     (str "Parked in slot number " (+ free-slot-number 1))
+  (let [free-slot-number (.indexOf (:slots parking-lot) nil)
+        car-not-found-return-code -1]
+    (if-not (= free-slot-number car-not-found-return-code)
+      {:message     (str "Parked in slot number " (inc free-slot-number))
        :parking-lot (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))}
       {:message     "Parking Lot is full"
        :parking-lot parking-lot})))
