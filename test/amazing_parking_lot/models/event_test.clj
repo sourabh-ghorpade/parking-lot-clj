@@ -12,8 +12,9 @@
 (deftest create-state-changed-event-test
   (testing "it returns a car parked event"
     (let [car (car/create "A" "White")]
-      (is (= (create-car-parked-event :park 1 car)
+      (is (= (create-car-parked-event :park 1 car :some-parking-lot)
              {:response-code 2
               :action        {:name        :park
                               :slot-number 1
-                              :car car}})))))
+                              :car         car}
+              :parking-lot   :some-parking-lot})))))

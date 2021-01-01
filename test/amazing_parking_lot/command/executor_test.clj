@@ -17,10 +17,11 @@
 
   (testing "when the command is park a car"
     (testing "it creates a parked message and sets the updated parking lot"
-      (with-redefs [parking-lot/park (fn [_ _] (merge {:parking-lot :expected-parking-lot}
-                                                      (event/create-car-parked-event :park-car
-                                                                                     1
-                                                                                     (car/create "ABC" "White"))))]
+      (with-redefs [parking-lot/park (fn [_ _]
+                                       (event/create-car-parked-event :park-car
+                                                                      1
+                                                                      (car/create "ABC" "White")
+                                                                      :expected-parking-lot))]
         (let [park-command (create-valid-option "park" ["ABC" "White"])
               resulting-option (execute park-command)]
           (is (= "Parked in slot number 1" (message resulting-option)))
