@@ -52,20 +52,27 @@
 
 (deftest leave-test
   (testing "when the slot number is valid"
-    (testing "when there is a car against the given slot number"
-      (testing "it un-parks the car with a message and frees the slot"
+    (testing "and there is a car against the given slot number"
+      (testing "it un-parks the car and returns a car un-parked event"
         (let [car_one (car/create "ABC" "white")
               parking-lot {:number-of-slots 1
                            :slots           [car_one]}
               leave-result (leave "1" parking-lot)]
           (is (= (:message leave-result) "Un-Parked Car ABC at slot 1"))
           (is (= (:parking-lot leave-result) {:number-of-slots 1
-                                              :slots           [nil]})))))
-    (testing "when there is no car against the given slot number"
-      (testing "it returns error"
-        (let [parking-lot {:number-of-slots 1
-                           :slots           [nil]}
-              leave-result (leave "1" parking-lot)]
-          (is (= (:message leave-result) "No car parked at the given slot"))
-          (is (= (:parking-lot leave-result) {:number-of-slots 1
-                                              :slots           [nil]})))))))
+                                              :slots           [nil]}))
+          (is (= (event/status-codes :car-un-parked) (:response-code leave-result)))
+          (is (= (:action leave-result) {:name        :car-un-parked
+                                         :slot-number "1"
+                                         :car         car_one})))
+        (testing "when there is no car against the given slot number"
+          (testing "it returns a no operation event with the response code as car not found"
+            (let [parking-lot {:number-of-slots 1
+                               :slots           [nil]}
+                  leave-result (leave "1" parking-lot)]
+              (is (= (:message leave-result) "No car parked at the given slot"))
+              (is (= (:parking-lot leave-result) {:number-of-slots 1
+                                                  :slots           [nil]}))
+              (is (= (event/status-codes :car-not-found) (:response-code leave-result)))
+              (is (= (event/status-codes :car-not-found) (:response-code leave-result)))
+              (is (= :no-operation (get-in leave-result [:action :name]))))))))))
