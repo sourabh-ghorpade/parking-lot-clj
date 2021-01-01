@@ -21,11 +21,11 @@
         (is (= (:action result) {:name        :park-car
                                  :slot-number 1
                                  :car         car}))
-        (is (= (:response-code result) (event/status-codes :state-changed))))))
+        (is (= (:response-code result) (event/status-codes :car-parked))))))
 
   (testing "when the parking lot is not empty"
     (testing "and there is space available"
-      (testing "it parks the car and returns a state changed event"
+      (testing "it parks the car and returns a car parked event"
         (let [car_one (car/create "ABC" "white")
               car_two (car/create "PQR" "black")
               parking-lot {:number-of-slots 3
@@ -36,7 +36,7 @@
           (is (= (:action result) {:name        :park-car
                                    :slot-number 2
                                    :car         car_two}))
-          (is (= (:response-code result) (event/status-codes :state-changed))))))
+          (is (= (:response-code result) (event/status-codes :car-parked))))))
 
     (testing "and there is no space available"
       (testing "then it returns parking lot is full"

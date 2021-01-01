@@ -16,24 +16,15 @@
         (is (= (parking-lot resulting-option) expected-parking-lot)))))
 
   (testing "when the command is park a car"
-    (testing "and the result of the command is a state change"
-      (testing "it creates a parked message and sets the updated parking lot"
-        (with-redefs [parking-lot/park (fn [_ _] (merge {:parking-lot :expected-parking-lot}
-                                                        (event/create-state-changed-event :park-car
-                                                                                          1
-                                                                                          (car/create "ABC" "White"))))]
-          (let [park-command (create-valid-option "park" ["ABC" "White"])
-                resulting-option (execute park-command)]
-            (is (= "Parked in slot number 1" (message resulting-option)))
-            (is (= :expected-parking-lot (parking-lot resulting-option)))))))
-    (testing "and the result of the command is not a state change but a parking-lot full error"
-      (testing "it creates a parking lot full message and sets the same parking lot"
-        (with-redefs [parking-lot/park (fn [_ _] (merge {:parking-lot :expected-parking-lot}
-                                                        (event/create-no-operation-event (event/status-codes :parking-lot-full))))]
-          (let [park-command (create-valid-option "park" ["ABC" "White"])
-                resulting-option (execute park-command)]
-            (is (= "Parking Lot is full" (message resulting-option)))
-            (is (= :expected-parking-lot (parking-lot resulting-option))))))))
+    (testing "it creates a parked message and sets the updated parking lot"
+      (with-redefs [parking-lot/park (fn [_ _] (merge {:parking-lot :expected-parking-lot}
+                                                      (event/create-car-parked-event :park-car
+                                                                                     1
+                                                                                     (car/create "ABC" "White"))))]
+        (let [park-command (create-valid-option "park" ["ABC" "White"])
+              resulting-option (execute park-command)]
+          (is (= "Parked in slot number 1" (message resulting-option)))
+          (is (= :expected-parking-lot (parking-lot resulting-option)))))))
   (testing "when the command is leave a car"
     (testing "it executes the command, sets the message and returns the result"
       (let [actual-slot-number (atom nil)

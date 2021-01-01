@@ -1,11 +1,11 @@
 (ns amazing-parking-lot.models.event)
 
 (def status-codes
-  {:state-changed    2
+  {:car-parked       2
    :parking-lot-full 1})
 
-(defn create-state-changed-event [action-name slot-number car]
-  {:response-code (status-codes :state-changed)
+(defn create-car-parked-event [action-name slot-number car]
+  {:response-code (status-codes :car-parked)
    :action        {:name        action-name
                    :slot-number slot-number
                    :car         car}})
