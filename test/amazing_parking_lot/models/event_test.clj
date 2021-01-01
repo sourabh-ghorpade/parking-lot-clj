@@ -5,9 +5,10 @@
 
 (deftest create-no-operation-event-test
   (testing "it returns a no-op event"
-    (is (= (create-no-operation-event (status-codes :parking-lot-full))
+    (is (= (create-no-operation-event (status-codes :parking-lot-full) :some-parking-lot)
            {:response-code 1
-            :action        {:name :no-operation}}))))
+            :action        {:name :no-operation}
+            :parking-lot   :some-parking-lot}))))
 
 (deftest create-state-changed-event-test
   (testing "it returns a car parked event"

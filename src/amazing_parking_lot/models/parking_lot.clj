@@ -34,5 +34,4 @@
             parking-lot (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))
             event-message (event/create-car-parked-event :park-car index-one-slot-number car parking-lot)]
         event-message)
-      (merge {:parking-lot parking-lot}
-             (event/create-no-operation-event (event/status-codes :parking-lot-full))))))
+      (event/create-no-operation-event (event/status-codes :parking-lot-full) parking-lot))))

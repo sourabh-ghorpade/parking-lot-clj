@@ -12,6 +12,7 @@
                    :car         parked-car}
    :parking-lot   parking-lot})
 
-(defn create-no-operation-event [response-code]
+(defn create-no-operation-event [response-code parking-lot]
   {:response-code response-code
-   :action        {:name :no-operation}})
+   :action        {:name :no-operation}
+   :parking-lot parking-lot})
