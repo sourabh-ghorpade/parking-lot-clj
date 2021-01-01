@@ -1,6 +1,10 @@
 (ns amazing-parking-lot.models.parking-lot
   (:require [amazing-parking-lot.models.car :as car]))
 
+(def status-codes
+  {:state-changed    2
+   :parking-lot-full 1})
+
 (defn create [number-of-slots]
   {:number-of-slots number-of-slots
    :slots           (vec (repeat number-of-slots nil))})
@@ -29,7 +33,14 @@
   (let [free-slot-number (.indexOf (:slots parking-lot) nil)
         car-not-found-return-code -1]
     (if-not (= free-slot-number car-not-found-return-code)
-      {:message     (str "Parked in slot number " (inc free-slot-number))
-       :parking-lot (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))}
-      {:message     "Parking Lot is full"
-       :parking-lot parking-lot})))
+      (let [index-one-slot-number (inc free-slot-number)]
+        {:message       (str "Parked in slot number " index-one-slot-number)
+         :parking-lot   (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))
+         :response-code (status-codes :state-changed)
+         :action        {:name        :park-car
+                         :slot-number index-one-slot-number
+                         :car         car}})
+      {:message       "Parking Lot is full"
+       :parking-lot   parking-lot
+       :response-code (status-codes :parking-lot-full)
+       :action        {:name :no-operation}})))

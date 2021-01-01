@@ -33,8 +33,8 @@ Options for removing view logic (printing output) from the domain.
 Sample return type of park/leave
 {:status-code 200
 :action      {:name        :remove-car / :park-car
-:slot-number 1
-:car         {:license-number "KA" :colour "White"}}}
+             :slot-number 1
+             :car         {:license-number "KA" :colour "White"}}}
 
 Sample return of state fn
 {:slots [car_one, car_two, nil, car_four]}

@@ -17,11 +17,15 @@
             result (park car parking-lot)]
         (is (= (:message result) "Parked in slot number 1"))
         (is (= (:parking-lot result) {:number-of-slots 3
-                                      :slots           [car nil nil]})))))
+                                      :slots           [car nil nil]}))
+        (is (= (:action result) {:name        :park-car
+                                 :slot-number 1
+                                 :car         car}))
+        (is (= (:response-code result) (status-codes :state-changed))))))
 
   (testing "when the parking lot is not empty"
     (testing "and there is space available"
-      (testing "it parks the car"
+      (testing "it parks the car and returns a state changed event"
         (let [car_one (car/create "ABC" "white")
               car_two (car/create "PQR" "black")
               parking-lot {:number-of-slots 3
@@ -29,7 +33,12 @@
               result (park car_two parking-lot)]
           (is (= (:message result) "Parked in slot number 2"))
           (is (= (:parking-lot result) {:number-of-slots 3
-                                        :slots           [car_one car_two nil]})))))
+                                        :slots           [car_one car_two nil]}))
+          (is (= (:action result) {:name        :park-car
+                                   :slot-number 2
+                                   :car         car_two}))
+          (is (= (:response-code result) (status-codes :state-changed))))))
+
     (testing "and there is no space available"
       (testing "then it returns parking lot is full"
         (let [car_one (car/create "ABC" "white")
@@ -39,7 +48,9 @@
               result (park car_two parking-lot)]
           (is (= (:message result) "Parking Lot is full"))
           (is (= (:parking-lot result) {:number-of-slots 1
-                                        :slots           (vec [car_one])})))))))
+                                        :slots           (vec [car_one])}))
+          (is (= (status-codes :parking-lot-full) (:response-code result)))
+          (is (= (:action result) {:name :no-operation})))))))
 
 (deftest leave-test
   (testing "when the slot number is valid"
