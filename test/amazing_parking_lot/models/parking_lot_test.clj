@@ -1,7 +1,8 @@
 (ns amazing-parking-lot.models.parking-lot-test
   (:require [clojure.test :refer :all])
   (:require [amazing-parking-lot.models.parking-lot :refer :all]
-            [amazing-parking-lot.models.car :as car]))
+            [amazing-parking-lot.models.car :as car]
+            [amazing-parking-lot.models.event :as event]))
 
 (deftest create-test
   (testing "creates a parking lot with the given slots"
@@ -21,7 +22,7 @@
         (is (= (:action result) {:name        :park-car
                                  :slot-number 1
                                  :car         car}))
-        (is (= (:response-code result) (status-codes :state-changed))))))
+        (is (= (:response-code result) (event/status-codes :state-changed))))))
 
   (testing "when the parking lot is not empty"
     (testing "and there is space available"
@@ -37,7 +38,7 @@
           (is (= (:action result) {:name        :park-car
                                    :slot-number 2
                                    :car         car_two}))
-          (is (= (:response-code result) (status-codes :state-changed))))))
+          (is (= (:response-code result) (event/status-codes :state-changed))))))
 
     (testing "and there is no space available"
       (testing "then it returns parking lot is full"
@@ -49,7 +50,7 @@
           (is (= (:message result) "Parking Lot is full"))
           (is (= (:parking-lot result) {:number-of-slots 1
                                         :slots           (vec [car_one])}))
-          (is (= (status-codes :parking-lot-full) (:response-code result)))
+          (is (= (event/status-codes :parking-lot-full) (:response-code result)))
           (is (= (:action result) {:name :no-operation})))))))
 
 (deftest leave-test

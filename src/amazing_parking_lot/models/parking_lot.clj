@@ -1,9 +1,6 @@
 (ns amazing-parking-lot.models.parking-lot
-  (:require [amazing-parking-lot.models.car :as car]))
-
-(def status-codes
-  {:state-changed    2
-   :parking-lot-full 1})
+  (:require [amazing-parking-lot.models.car :as car]
+            [amazing-parking-lot.models.event :as event]))
 
 (defn create [number-of-slots]
   {:number-of-slots number-of-slots
@@ -33,14 +30,13 @@
   (let [free-slot-number (.indexOf (:slots parking-lot) nil)
         car-not-found-return-code -1]
     (if-not (= free-slot-number car-not-found-return-code)
-      (let [index-one-slot-number (inc free-slot-number)]
-        {:message       (str "Parked in slot number " index-one-slot-number)
-         :parking-lot   (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))
-         :response-code (status-codes :state-changed)
-         :action        {:name        :park-car
-                         :slot-number index-one-slot-number
-                         :car         car}})
-      {:message       "Parking Lot is full"
-       :parking-lot   parking-lot
-       :response-code (status-codes :parking-lot-full)
-       :action        {:name :no-operation}})))
+      (let [index-one-slot-number (inc free-slot-number)
+            legacy-message {:message     (str "Parked in slot number " index-one-slot-number)
+                            :parking-lot (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))}
+            event-message (event/create-state-changed-event :park-car
+                                                            index-one-slot-number
+                                                            car)]
+        (merge legacy-message event-message))
+      (merge {:message     "Parking Lot is full"
+              :parking-lot parking-lot}
+             (event/create-no-operation-event (event/status-codes :parking-lot-full))))))
