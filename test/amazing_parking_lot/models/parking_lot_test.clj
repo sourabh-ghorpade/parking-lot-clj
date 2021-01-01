@@ -16,7 +16,6 @@
       (let [parking-lot (create 3)
             car (car/create "ABC" "white")
             result (park car parking-lot)]
-        (is (= (:message result) "Parked in slot number 1"))
         (is (= (:parking-lot result) {:number-of-slots 3
                                       :slots           [car nil nil]}))
         (is (= (:action result) {:name        :park-car
@@ -32,7 +31,6 @@
               parking-lot {:number-of-slots 3
                            :slots           (vec [car_one nil nil])}
               result (park car_two parking-lot)]
-          (is (= (:message result) "Parked in slot number 2"))
           (is (= (:parking-lot result) {:number-of-slots 3
                                         :slots           [car_one car_two nil]}))
           (is (= (:action result) {:name        :park-car
@@ -47,7 +45,6 @@
               parking-lot {:number-of-slots 1
                            :slots           (vec [car_one])}
               result (park car_two parking-lot)]
-          (is (= (:message result) "Parking Lot is full"))
           (is (= (:parking-lot result) {:number-of-slots 1
                                         :slots           (vec [car_one])}))
           (is (= (event/status-codes :parking-lot-full) (:response-code result)))

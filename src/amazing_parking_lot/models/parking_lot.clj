@@ -31,12 +31,10 @@
         car-not-found-return-code -1]
     (if-not (= free-slot-number car-not-found-return-code)
       (let [index-one-slot-number (inc free-slot-number)
-            legacy-message {:message     (str "Parked in slot number " index-one-slot-number)
-                            :parking-lot (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))}
+            legacy-message {:parking-lot (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))}
             event-message (event/create-state-changed-event :park-car
                                                             index-one-slot-number
                                                             car)]
         (merge legacy-message event-message))
-      (merge {:message     "Parking Lot is full"
-              :parking-lot parking-lot}
+      (merge {:parking-lot parking-lot}
              (event/create-no-operation-event (event/status-codes :parking-lot-full))))))
