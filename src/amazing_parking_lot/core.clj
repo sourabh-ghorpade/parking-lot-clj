@@ -1,17 +1,15 @@
 (ns amazing-parking-lot.core
-  (:require [amazing-parking-lot.input.processor :as processor]
-            [amazing-parking-lot.input.command-argument-option :as option])
+  (:require [amazing-parking-lot.input.runner :as runner])
   (:gen-class))
 
+(defn command-line-reader []
+  (read-line))
+
+(defn command-line-writer [message]
+  (prn message))
 
 (defn -main
   ([]
-   (loop [input (read-line)
-          parking-lot nil]
-     (if-not (= input "exit")
-       (do
-         (let [result-option (processor/process input parking-lot)]
-           (println (option/message result-option))
-           (recur (read-line) (option/parking-lot result-option)))))))
+   (runner/run command-line-reader command-line-writer))
   ([args]
    (println args)))

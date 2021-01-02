@@ -32,6 +32,7 @@
     (if (= free-slot-number car-not-found-return-code)
       (event/create-no-operation-event (event/status-codes :parking-lot-full) parking-lot)
       (let [index-one-slot-number (inc free-slot-number)
-            parking-lot (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))
-            event-message (event/create-car-parked-event :park-car index-one-slot-number car parking-lot)]
+            parking-lot-with-new-car (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))
+            event-message (event/create-car-parked-event :park-car index-one-slot-number
+                                                         car parking-lot-with-new-car)]
         event-message))))
