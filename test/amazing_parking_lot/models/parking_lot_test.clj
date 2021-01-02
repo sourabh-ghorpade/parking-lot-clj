@@ -59,7 +59,6 @@
               parking-lot {:number-of-slots 1
                            :slots           [car_one]}
               leave-result (leave "1" parking-lot)]
-          (is (= (:message leave-result) "Un-Parked Car ABC at slot 1"))
           (is (= (:parking-lot leave-result) {:number-of-slots 1
                                               :slots           [nil]}))
           (is (= (event/status-codes :car-un-parked) (:response-code leave-result)))
@@ -74,7 +73,6 @@
         (let [parking-lot {:number-of-slots 1
                            :slots           [nil]}
               leave-result (leave "1" parking-lot)]
-          (is (= (:message leave-result) "No car parked at the given slot"))
           (is (= (:parking-lot leave-result) {:number-of-slots 1
                                               :slots           [nil]}))
           (is (= (event/status-codes :car-not-found) (:response-code leave-result)))

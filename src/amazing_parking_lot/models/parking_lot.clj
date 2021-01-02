@@ -19,12 +19,9 @@
   (let [formatted-slot-number (dec (Integer/parseInt slot-number))
         car-to-be-removed (.get (:slots parking-lot) formatted-slot-number)]
     (if-not car-to-be-removed
-      (merge {:message     "No car parked at the given slot"}
-             (event/create-no-operation-event (event/status-codes :car-not-found) parking-lot))
-      (let [updated-parking-lot (assoc parking-lot :slots (remove-car formatted-slot-number parking-lot))
-            licence-number (car/get-license-number car-to-be-removed)]
-        (merge {:message     (format "Un-Parked Car %s at slot %s" licence-number slot-number)}
-               (event/create-car-un-parked-event slot-number car-to-be-removed updated-parking-lot))))))
+      (event/create-no-operation-event (event/status-codes :car-not-found) parking-lot)
+      (let [updated-parking-lot (assoc parking-lot :slots (remove-car formatted-slot-number parking-lot))]
+        (event/create-car-un-parked-event slot-number car-to-be-removed updated-parking-lot)))))
 
 (defn park [car parking-lot]
   (let [free-slot-number (.indexOf (:slots parking-lot) nil)

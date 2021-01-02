@@ -21,8 +21,11 @@
     (option/create-valid-option command-arguments message parking-lot)))
 
 (defn- leave [command-arguments]
-  (parking-lot/leave (first (option/arguments command-arguments))
-                     (option/parking-lot command-arguments)))
+  (let [leave-result (parking-lot/leave (first (option/arguments command-arguments))
+                                        (option/parking-lot command-arguments))
+        message (message-generator/generate-message (:response-code leave-result) (:action leave-result))]
+    {:message     message
+     :parking-lot (:parking-lot leave-result)}))
 
 (def executors {"create_parking_lot" create-parking-lot
                 "park"               park

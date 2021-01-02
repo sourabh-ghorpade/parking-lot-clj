@@ -25,6 +25,6 @@
                           "park \"KA-789\" \"Red\""
                           "exit"]
           expected-output ["Created parking lot with 2 slots" "Parked in slot number 1" "Parked in slot number 2"
-                           "Parking Lot is full" "Un-Parked Car \"KA-123\" at slot 1" "Parked in slot number 1"]]
+                           "Parking Lot is full" "Un-parked car \"KA-123\" at slot 1" "Parked in slot number 1"]]
       (run (test-command-reader input-commands) (test-writer output-capture-list))
       (is (= expected-output @output-capture-list)))))
