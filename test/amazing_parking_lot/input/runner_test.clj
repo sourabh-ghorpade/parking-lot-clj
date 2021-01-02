@@ -18,15 +18,13 @@
   (testing "it processes and outputs all inputs till input is not the exit command"
     (let [output-capture-list (atom (vec []))
           input-commands ["create_parking_lot 2"
-                                   "park \"KA-123\" \"White\""
-                                   "park \"KA-456\" \"Black\""
-                                   "park \"KA-789\" \"Red\""
-                                   "leave 1"
-                                   "exit"]
-          expected-output ["Created parking lot with 2 slots"
-                           "Parked in slot number 1"
-                           "Parked in slot number 2"
-                           "Parking Lot is full"
-                           "Un-Parked Car \"KA-123\" at slot 1"]]
+                          "park \"KA-123\" \"White\""
+                          "park \"KA-456\" \"Black\""
+                          "park \"KA-789\" \"Red\""
+                          "leave 1"
+                          "park \"KA-789\" \"Red\""
+                          "exit"]
+          expected-output ["Created parking lot with 2 slots" "Parked in slot number 1" "Parked in slot number 2"
+                           "Parking Lot is full" "Un-Parked Car \"KA-123\" at slot 1" "Parked in slot number 1"]]
       (run (test-command-reader input-commands) (test-writer output-capture-list))
       (is (= expected-output @output-capture-list)))))

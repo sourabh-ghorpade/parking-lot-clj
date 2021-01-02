@@ -11,9 +11,9 @@
   (let [coll (:slots parking-lot)
         i slot-number
         empty-slot [nil]]
-    (concat (subvec coll 0 i)
-            empty-slot
-            (subvec coll (inc i)))))
+    (vec (concat (subvec coll 0 i)
+                 empty-slot
+                 (subvec coll (inc i))))))
 
 (defn leave [slot-number parking-lot]
   (let [formatted-slot-number (dec (Integer/parseInt slot-number))
@@ -32,7 +32,5 @@
     (if (= free-slot-number car-not-found-return-code)
       (event/create-no-operation-event (event/status-codes :parking-lot-full) parking-lot)
       (let [index-one-slot-number (inc free-slot-number)
-            parking-lot-with-new-car (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))
-            event-message (event/create-car-parked-event :park-car index-one-slot-number
-                                                         car parking-lot-with-new-car)]
-        event-message))))
+            parking-lot-with-new-car (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))]
+        (event/create-car-parked-event :park-car index-one-slot-number car parking-lot-with-new-car)))))

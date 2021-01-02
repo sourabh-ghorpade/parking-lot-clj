@@ -2,7 +2,8 @@
   (:require [clojure.test :refer :all])
   (:require [amazing-parking-lot.models.parking-lot :refer :all]
             [amazing-parking-lot.models.car :as car]
-            [amazing-parking-lot.models.event :as event]))
+            [amazing-parking-lot.models.event :as event])
+  (:import (clojure.lang PersistentVector)))
 
 (deftest create-test
   (testing "creates a parking lot with the given slots"
@@ -64,15 +65,18 @@
           (is (= (event/status-codes :car-un-parked) (:response-code leave-result)))
           (is (= (:action leave-result) {:name        :car-un-parked
                                          :slot-number "1"
-                                         :car         car_one})))
-        (testing "when there is no car against the given slot number"
-          (testing "it returns a no operation event with the response code as car not found"
-            (let [parking-lot {:number-of-slots 1
-                               :slots           [nil]}
-                  leave-result (leave "1" parking-lot)]
-              (is (= (:message leave-result) "No car parked at the given slot"))
-              (is (= (:parking-lot leave-result) {:number-of-slots 1
-                                                  :slots           [nil]}))
-              (is (= (event/status-codes :car-not-found) (:response-code leave-result)))
-              (is (= (event/status-codes :car-not-found) (:response-code leave-result)))
-              (is (= :no-operation (get-in leave-result [:action :name]))))))))))
+                                         :car         car_one}))
+          ; The following check ensures that the slots are a vector
+          ; That will enable the assoc for further parks.
+          (is (= PersistentVector (type (get-in leave-result [:parking-lot :slots])))))))
+    (testing "when there is no car against the given slot number"
+      (testing "it returns a no operation event with the response code as car not found"
+        (let [parking-lot {:number-of-slots 1
+                           :slots           [nil]}
+              leave-result (leave "1" parking-lot)]
+          (is (= (:message leave-result) "No car parked at the given slot"))
+          (is (= (:parking-lot leave-result) {:number-of-slots 1
+                                              :slots           [nil]}))
+          (is (= (event/status-codes :car-not-found) (:response-code leave-result)))
+          (is (= (event/status-codes :car-not-found) (:response-code leave-result)))
+          (is (= :no-operation (get-in leave-result [:action :name]))))))))
