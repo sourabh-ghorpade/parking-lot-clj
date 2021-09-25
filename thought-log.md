@@ -37,4 +37,4 @@ Sample return type of park/leave
              :car         {:license-number "KA" :colour "White"}}}
 
 Sample return of state fn
-{:slots [car_one, car_two, nil, car_four]}
+{:slots [car-one, car-two, nil, car-four]}

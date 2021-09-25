@@ -27,27 +27,27 @@
   (testing "when the parking lot is not empty"
     (testing "and there is space available"
       (testing "it parks the car and returns a car parked event"
-        (let [car_one (car/create "ABC" "white")
-              car_two (car/create "PQR" "black")
+        (let [car-one (car/create "ABC" "white")
+              car-two (car/create "PQR" "black")
               parking-lot {:number-of-slots 3
-                           :slots           (vec [car_one nil nil])}
-              result (park car_two parking-lot)]
+                           :slots           (vec [car-one nil nil])}
+              result (park car-two parking-lot)]
           (is (= (:parking-lot result) {:number-of-slots 3
-                                        :slots           [car_one car_two nil]}))
+                                        :slots           [car-one car-two nil]}))
           (is (= (:action result) {:name        :park-car
                                    :slot-number 2
-                                   :car         car_two}))
+                                   :car         car-two}))
           (is (= (:response-code result) (event/status-codes :car-parked))))))
 
     (testing "and there is no space available"
       (testing "then it returns parking lot is full"
-        (let [car_one (car/create "ABC" "white")
-              car_two (car/create "PQR" "black")
+        (let [car-one (car/create "ABC" "white")
+              car-two (car/create "PQR" "black")
               parking-lot {:number-of-slots 1
-                           :slots           (vec [car_one])}
-              result (park car_two parking-lot)]
+                           :slots           (vec [car-one])}
+              result (park car-two parking-lot)]
           (is (= (:parking-lot result) {:number-of-slots 1
-                                        :slots           (vec [car_one])}))
+                                        :slots           (vec [car-one])}))
           (is (= (event/status-codes :parking-lot-full) (:response-code result)))
           (is (= (:action result) {:name :no-operation})))))))
 
@@ -55,16 +55,16 @@
   (testing "when the slot number is valid"
     (testing "and there is a car against the given slot number"
       (testing "it un-parks the car and returns a car un-parked event"
-        (let [car_one (car/create "ABC" "white")
+        (let [car-one (car/create "ABC" "white")
               parking-lot {:number-of-slots 1
-                           :slots           [car_one]}
+                           :slots           [car-one]}
               leave-result (leave "1" parking-lot)]
           (is (= (:parking-lot leave-result) {:number-of-slots 1
                                               :slots           [nil]}))
           (is (= (event/status-codes :car-un-parked) (:response-code leave-result)))
           (is (= (:action leave-result) {:name        :car-un-parked
                                          :slot-number "1"
-                                         :car         car_one}))
+                                         :car         car-one}))
           ; The following check ensures that the slots are a vector
           ; That will enable the assoc for further parks.
           (is (= PersistentVector (type (get-in leave-result [:parking-lot :slots])))))))
