@@ -13,6 +13,7 @@
             resulting-option (execute create-command)
             expected-parking-lot {:number-of-slots 6, :slots [nil nil nil nil nil nil]}]
         (is (= (message resulting-option) "Created parking lot with 6 slots"))
+        (is (= (:parking-lot-created event/status-codes) (response-code resulting-option)))
         (is (= (parking-lot resulting-option) expected-parking-lot)))))
 
   (testing "when the command is park a car"

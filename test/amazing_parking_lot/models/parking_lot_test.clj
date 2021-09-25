@@ -6,10 +6,11 @@
   (:import (clojure.lang PersistentVector)))
 
 (deftest create-test
-  (testing "creates a parking lot with the given slots"
-    (let [value (create 3)]
-      (is (= value {:number-of-slots 3
-                    :slots           [nil nil nil]})))))
+  (testing "creates a parking lot with the given slots and returns an event"
+    (let [response (create 3)]
+      (is (= {:number-of-slots 3
+              :slots           [nil nil nil]} (:parking-lot response)))
+      (is (= (event/status-codes :parking-lot-created) (:response-code response))))))
 
 (deftest park-test
   (testing "when the parking lot is empty"
