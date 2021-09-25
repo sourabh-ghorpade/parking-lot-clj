@@ -26,6 +26,7 @@
         (let [park-command (create-valid-option "park" ["ABC" "White"])
               resulting-option (execute park-command)]
           (is (= "Parked in slot number 1" (message resulting-option)))
+          (is (= (:car-parked event/status-codes) (response-code resulting-option)))
           (is (= :expected-parking-lot (parking-lot resulting-option)))))))
   (testing "when the command is leave a car"
     (testing "it executes the command, sets the message and returns the result"
@@ -41,4 +42,5 @@
             (is (= "Un-parked car ABC at slot 1" (message resulting-option)))
             (is (= (parking-lot resulting-option) :expected-parking-lot))
             (is (= "1" @actual-slot-number))
+            (is (= (:car-un-parked event/status-codes) (response-code resulting-option)))
             (is (= :expected-parking-lot @actual-parking-lot))))))))
