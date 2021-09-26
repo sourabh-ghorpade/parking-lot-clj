@@ -55,4 +55,19 @@
                 resulting-option (execute registration-numbers-for-cars-with-colour)]
             (is (= "ABC, PQR" (message resulting-option)))
             (is (= (parking-lot resulting-option) :expected-parking-lot))
+            (is (= :expected-parking-lot @actual-parking-lot)))))))
+  (testing "when the command is slot_numbers_for_cars_with_colour"
+    (testing "it returns the list of slot numbers of cars with specified color"
+      (let [actual-car-color (atom nil)
+            actual-parking-lot (atom nil)]
+        (with-redefs [parking-lot/slot-numbers-for-cars-with-colour
+                      (fn [car-colour received-parking-lot]
+                                          (reset! actual-car-color car-colour)
+                                          (reset! actual-parking-lot received-parking-lot)
+                                          (event/slot-numbers-for-cars-with-colour [1 2] :expected-parking-lot))]
+          (let [slot-numbers-for-cars-with-colour (assoc (create-valid-option "slot_numbers_for_cars_with_colour" ["White"])
+                                :parking-lot :expected-parking-lot)
+                resulting-option (execute slot-numbers-for-cars-with-colour)]
+            (is (= "1, 2" (message resulting-option)))
+            (is (= (parking-lot resulting-option) :expected-parking-lot))
             (is (= :expected-parking-lot @actual-parking-lot))))))))

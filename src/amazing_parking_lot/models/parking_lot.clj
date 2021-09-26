@@ -36,3 +36,8 @@
   (let [filtered-cars (filter (fn [car] (= (car/color car) required-color)) (:slots parking-lot))
         registration-numbers (map car/get-license-number filtered-cars)]
     (event/create-registration-for-color-event registration-numbers parking-lot)))
+
+(defn slot-numbers-for-cars-with-colour [required-color parking-lot]
+  (let [slots (keep-indexed #(if (= (:color %2) required-color) %1) (:slots parking-lot))
+        index-one-slots (map inc slots)]
+    (event/slot-numbers-for-cars-with-colour index-one-slots parking-lot)))
