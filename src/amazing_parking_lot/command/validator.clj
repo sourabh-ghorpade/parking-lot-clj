@@ -3,7 +3,8 @@
 
 (def commands [{:name "create_parking_lot" :argument-count 1}
                {:name "park" :argument-count 2}
-               {:name "leave" :argument-count 1}])
+               {:name "leave" :argument-count 1}
+               {:name "registration_numbers_for_cars_with_colour" :argument-count 1}])
 
 (defn- argument-count-is-correct [input-command]
   (some #(= % input-command) commands))
