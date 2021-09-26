@@ -32,4 +32,7 @@
             parking-lot-with-new-car (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))]
         (event/create-car-parked-event :park-car index-one-slot-number car parking-lot-with-new-car)))))
 
-(defn registration-numbers-for-cars-with-colour [color parking-lot])
+(defn registration-numbers-for-cars-with-colour [required-color parking-lot]
+  (let [filtered-cars (filter (fn [car] (= (car/color car) required-color)) (:slots parking-lot))
+        registration-numbers (map car/get-license-number filtered-cars)]
+    (event/create-registration-for-color-event registration-numbers parking-lot)))

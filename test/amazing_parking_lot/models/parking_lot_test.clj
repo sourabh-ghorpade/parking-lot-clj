@@ -76,5 +76,17 @@
           (is (= (:parking-lot leave-result) {:number-of-slots 1
                                               :slots           [nil]}))
           (is (= (event/status-codes :car-not-found) (:response-code leave-result)))
-          (is (= (event/status-codes :car-not-found) (:response-code leave-result)))
           (is (= :no-operation (get-in leave-result [:action :name]))))))))
+
+(deftest registration-numbers-for-cars-with-colour-test
+  (testing "it returns a list of registration numbers for cars of given color"
+    (let [car-one (car/create "ABC" "white")
+          car-two (car/create "PQR" "red")
+          car-three (car/create "XYZ" "white")
+          parking-lot {:number-of-slots 1
+                       :slots           [car-one car-two car-three]}
+          result (registration-numbers-for-cars-with-colour "white" parking-lot)
+          expected-action {:name         :registration-numbers-for-cars-with-colour
+                           :query-result ["ABC" "XYZ"]}]
+      (is (= (event/status-codes :registration-numbers-for-cars-with-colour) (:response-code result)))
+      (is (= (expected-action (:action result)))))))

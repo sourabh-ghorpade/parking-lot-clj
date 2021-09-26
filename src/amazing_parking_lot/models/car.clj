@@ -8,3 +8,6 @@
 
 (defn get-license-number [car]
   (:license-number car))
+
+(defn color [car]
+  (:color car))
