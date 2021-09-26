@@ -27,9 +27,17 @@
     {:message     message
      :parking-lot (:parking-lot leave-result)}))
 
+(defn- registration-numbers-for-cars-with-colour [command-arguments]
+  (let [query-result (parking-lot/registration-numbers-for-cars-with-colour (first (option/arguments command-arguments))
+                                                                            (option/parking-lot command-arguments))
+        message (message-generator/generate-message (:response-code query-result) (:action query-result))]
+    {:message     message
+     :parking-lot (:parking-lot query-result)}))
+
 (def executors {"create_parking_lot" create-parking-lot
                 "park"               park
-                "leave"              leave})
+                "leave"              leave
+                "registration_numbers_for_cars_with_colour" registration-numbers-for-cars-with-colour})
 
 (defn execute [command-arguments-option]
   (let [executor (executors (option/command command-arguments-option))]

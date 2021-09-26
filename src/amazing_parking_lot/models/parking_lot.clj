@@ -31,3 +31,5 @@
       (let [index-one-slot-number (inc free-slot-number)
             parking-lot-with-new-car (assoc parking-lot :slots (assoc (parking-lot :slots) free-slot-number car))]
         (event/create-car-parked-event :park-car index-one-slot-number car parking-lot-with-new-car)))))
+
+(defn registration-numbers-for-cars-with-colour [color parking-lot])
