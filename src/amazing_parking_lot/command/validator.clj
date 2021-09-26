@@ -6,6 +6,7 @@
                {:name "leave" :argument-count 1}
                {:name "registration_numbers_for_cars_with_colour" :argument-count 1}
                {:name "slot_numbers_for_cars_with_colour" :argument-count 1}
+               {:name "slot_number_for_registration_number" :argument-count 1}
                ])
 
 (defn- argument-count-is-correct [input-command]

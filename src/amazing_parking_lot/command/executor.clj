@@ -36,7 +36,14 @@
 
 (defn slot-numbers-for-cars-with-colour [command-arguments]
   (let [query-result (parking-lot/slot-numbers-for-cars-with-colour (first (option/arguments command-arguments))
-                                                                            (option/parking-lot command-arguments))
+                                                                    (option/parking-lot command-arguments))
+        message (message-generator/generate-message (:response-code query-result) (:action query-result))]
+    {:message     message
+     :parking-lot (:parking-lot query-result)}))
+
+(defn slot-number-for-registration-number [command-arguments]
+  (let [query-result (parking-lot/slot-number-for-registration-number (first (option/arguments command-arguments))
+                                                                    (option/parking-lot command-arguments))
         message (message-generator/generate-message (:response-code query-result) (:action query-result))]
     {:message     message
      :parking-lot (:parking-lot query-result)}))
@@ -45,7 +52,8 @@
                 "park"                                      park
                 "leave"                                     leave
                 "registration_numbers_for_cars_with_colour" registration-numbers-for-cars-with-colour
-                "slot_numbers_for_cars_with_colour"         slot-numbers-for-cars-with-colour})
+                "slot_numbers_for_cars_with_colour"         slot-numbers-for-cars-with-colour
+                "slot_number_for_registration_number"       slot-number-for-registration-number})
 
 (defn execute [command-arguments-option]
   (let [executor (executors (option/command command-arguments-option))]

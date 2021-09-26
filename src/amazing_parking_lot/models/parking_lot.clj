@@ -38,6 +38,11 @@
     (event/create-registration-for-color-event registration-numbers parking-lot)))
 
 (defn slot-numbers-for-cars-with-colour [required-color parking-lot]
-  (let [slots (keep-indexed #(if (= (:color %2) required-color) %1) (:slots parking-lot))
+  (let [slots (keep-indexed #(if (= (car/color %2) required-color) %1) (:slots parking-lot))
         index-one-slots (map inc slots)]
     (event/slot-numbers-for-cars-with-colour index-one-slots parking-lot)))
+
+(defn slot-number-for-registration-number [registration-number parking-lot]
+  (let [index-one-slot-number (inc (first (keep-indexed #(if (= (car/get-license-number %2) registration-number) %1)
+                                              (:slots parking-lot))))]
+    (event/slot-number-for-car-with-registration-number index-one-slot-number parking-lot)))

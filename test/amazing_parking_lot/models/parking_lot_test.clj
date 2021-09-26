@@ -103,3 +103,16 @@
                            :query-result [1 3]}]
       (is (= (event/status-codes :slot-numbers-for-cars-with-colour) (:response-code result)))
       (is (= expected-action (:action result))))))
+
+(deftest slot-number-for-registration-number-test
+  (testing "it returns a slot number of the car of given registration number"
+    (let [car-one (car/create "ABC" "white")
+          car-two (car/create "PQR" "red")
+          car-three (car/create "XYZ" "white")
+          parking-lot {:number-of-slots 3
+                       :slots           [car-one car-two car-three]}
+          result (slot-number-for-registration-number "PQR" parking-lot)
+          expected-action {:name         :slot-number-for-car-with-registration-number
+                           :query-result 2}]
+      (is (= (event/status-codes :slot-number-for-car-with-registration-number) (:response-code result)))
+      (is (= expected-action (:action result))))))

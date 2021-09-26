@@ -17,6 +17,7 @@
                           "park \"KA-987\" \"Red\""
                           "registration_numbers_for_cars_with_colour \"Red\""
                           "slot_numbers_for_cars_with_colour \"Red\""
+                          "slot_number_for_registration_number \"KA-987\""
                           "exit"]
           expected-output ["Parking Lot not created"
                            "Parking Lot not created"
@@ -28,6 +29,7 @@
                            "Un-parked car \"KA-123\" at slot 1"
                            "Parked in slot number 1"
                            "\"KA-987\", \"KA-789\""
-                           "1, 3"]]
+                           "1, 3"
+                           "1"]]
       (runner/run (util/test-command-reader input-commands) (util/test-writer output-capture-list))
       (is (= expected-output @output-capture-list)))))
