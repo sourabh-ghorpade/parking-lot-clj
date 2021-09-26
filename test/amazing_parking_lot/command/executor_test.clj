@@ -49,7 +49,7 @@
                       (fn [car-colour received-parking-lot]
                                           (reset! actual-car-color car-colour)
                                           (reset! actual-parking-lot received-parking-lot)
-                                          (event/create-registration-for-color-event ["ABC" "PQR"] :expected-parking-lot))]
+                                          (event/create-query-processed-event ["ABC" "PQR"] :expected-parking-lot))]
           (let [registration-numbers-for-cars-with-colour (assoc (create-valid-option "registration_numbers_for_cars_with_colour" ["White"])
                                 :parking-lot :expected-parking-lot)
                 resulting-option (execute registration-numbers-for-cars-with-colour)]
@@ -64,7 +64,7 @@
                       (fn [car-colour received-parking-lot]
                                           (reset! actual-car-color car-colour)
                                           (reset! actual-parking-lot received-parking-lot)
-                                          (event/slot-numbers-for-cars-with-colour [1 2] :expected-parking-lot))]
+                                          (event/create-query-processed-event [1 2] :expected-parking-lot))]
           (let [slot-numbers-for-cars-with-colour (assoc (create-valid-option "slot_numbers_for_cars_with_colour" ["White"])
                                 :parking-lot :expected-parking-lot)
                 resulting-option (execute slot-numbers-for-cars-with-colour)]
@@ -79,7 +79,7 @@
                       (fn [car-colour received-parking-lot]
                                           (reset! actual-car-color car-colour)
                                           (reset! actual-parking-lot received-parking-lot)
-                                          (event/slot-number-for-car-with-registration-number 1 :expected-parking-lot))]
+                                          (event/create-query-processed-event [1] :expected-parking-lot))]
           (let [slot-numbers-for-cars-with-colour (assoc (create-valid-option "slot_number_for_registration_number" ["White"])
                                 :parking-lot :expected-parking-lot)
                 resulting-option (execute slot-numbers-for-cars-with-colour)]

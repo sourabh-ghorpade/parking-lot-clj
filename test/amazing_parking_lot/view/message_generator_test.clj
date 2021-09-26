@@ -18,13 +18,8 @@
       (let [generated-message (generate-message (event/status-codes :car-un-parked)
                                                 {:slot-number 1 :car (car/create "KA-123" "White")})]
         (is (= "Un-parked car KA-123 at slot 1" generated-message)))))
-  (testing "when the response code is for :registration-numbers-for-cars-with-colour"
+  (testing "when the response code is for a query"
     (testing "it generates registration-numbers-for-cars-with-colour message"
-      (let [generated-message (generate-message (event/status-codes :registration-numbers-for-cars-with-colour)
-                                                (:action (event/create-registration-for-color-event ["ABC" "XYZ"] :parking-lot)))]
-        (is (= "ABC, XYZ" generated-message)))))
-  (testing "when the response code is for :slot-numbers-for-cars-with-colour"
-    (testing "it generates slot-numbers-for-cars-with-colour message"
-      (let [generated-message (generate-message (event/status-codes :slot-numbers-for-cars-with-colour)
-                                                (:action (event/slot-numbers-for-cars-with-colour [3 4] :parking-lot)))]
-        (is (= "3, 4" generated-message))))))
+      (let [generated-message (generate-message (event/status-codes :query)
+                                                (:action (event/create-query-processed-event ["ABC" "XYZ"] :parking-lot)))]
+        (is (= "ABC, XYZ" generated-message))))))

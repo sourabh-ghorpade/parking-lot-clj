@@ -86,9 +86,9 @@
           parking-lot {:number-of-slots 3
                        :slots           [car-one car-two car-three]}
           result (registration-numbers-for-cars-with-colour "white" parking-lot)
-          expected-action {:name         :registration-numbers-for-cars-with-colour
+          expected-action {:name         :query
                            :query-result ["ABC" "XYZ"]}]
-      (is (= (event/status-codes :registration-numbers-for-cars-with-colour) (:response-code result)))
+      (is (= (event/status-codes :query) (:response-code result)))
       (is (= expected-action (:action result))))))
 
 (deftest slot-numbers-for-cars-with-colour-test
@@ -99,9 +99,9 @@
           parking-lot {:number-of-slots 3
                        :slots           [car-one car-two car-three]}
           result (slot-numbers-for-cars-with-colour "white" parking-lot)
-          expected-action {:name         :slot-numbers-for-cars-with-colour
+          expected-action {:name         :query
                            :query-result [1 3]}]
-      (is (= (event/status-codes :slot-numbers-for-cars-with-colour) (:response-code result)))
+      (is (= (event/status-codes :query) (:response-code result)))
       (is (= expected-action (:action result))))))
 
 (deftest slot-number-for-registration-number-test
@@ -112,7 +112,7 @@
           parking-lot {:number-of-slots 3
                        :slots           [car-one car-two car-three]}
           result (slot-number-for-registration-number "PQR" parking-lot)
-          expected-action {:name         :slot-number-for-car-with-registration-number
-                           :query-result 2}]
-      (is (= (event/status-codes :slot-number-for-car-with-registration-number) (:response-code result)))
+          expected-action {:name         :query
+                           :query-result [2]}]
+      (is (= (event/status-codes :query) (:response-code result)))
       (is (= expected-action (:action result))))))
