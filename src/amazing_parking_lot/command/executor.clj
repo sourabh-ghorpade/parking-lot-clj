@@ -43,17 +43,28 @@
 
 (defn slot-number-for-registration-number [command-arguments]
   (let [query-result (parking-lot/slot-number-for-registration-number (first (option/arguments command-arguments))
-                                                                    (option/parking-lot command-arguments))
+                                                                      (option/parking-lot command-arguments))
         message (message-generator/generate-message (:response-code query-result) (:action query-result))]
     {:message     message
      :parking-lot (:parking-lot query-result)}))
 
+(defn- query-executor [command command-arguments]
+  (let [query-result (command (first (option/arguments command-arguments))
+                              (option/parking-lot command-arguments))
+        message (message-generator/generate-message (:response-code query-result) (:action query-result))]
+    {:message     message
+     :parking-lot (:parking-lot query-result)}))
+
+(defn- query-generator [command]
+  (fn [command-arguments]
+    (query-executor command command-arguments)))
+
 (def executors {"create_parking_lot"                        create-parking-lot
                 "park"                                      park
                 "leave"                                     leave
-                "registration_numbers_for_cars_with_colour" registration-numbers-for-cars-with-colour
-                "slot_numbers_for_cars_with_colour"         slot-numbers-for-cars-with-colour
-                "slot_number_for_registration_number"       slot-number-for-registration-number})
+                "registration_numbers_for_cars_with_colour" (query-generator parking-lot/registration-numbers-for-cars-with-colour)
+                "slot_numbers_for_cars_with_colour"         (query-generator parking-lot/slot-numbers-for-cars-with-colour)
+                "slot_number_for_registration_number"       (query-generator parking-lot/slot-number-for-registration-number)})
 
 (defn execute [command-arguments-option]
   (let [executor (executors (option/command command-arguments-option))]

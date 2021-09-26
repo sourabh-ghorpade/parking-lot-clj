@@ -7,8 +7,6 @@
    :car-un-parked                                3
    :car-not-found                                4
    :query                                        8
-   :slot-numbers-for-cars-with-colour            6
-   :slot-number-for-car-with-registration-number 7
    })
 
 (defn create-car-parked-event [action-name slot-number parked-car parking-lot]
@@ -33,17 +31,5 @@
 (defn create-query-processed-event [query-result parking-lot]
   {:response-code (status-codes :query)
    :action        {:name         :query
-                   :query-result query-result}
-   :parking-lot   parking-lot})
-
-(defn slot-numbers-for-cars-with-colour [query-result parking-lot]
-  {:response-code (status-codes :slot-numbers-for-cars-with-colour)
-   :action        {:name         :slot-numbers-for-cars-with-colour
-                   :query-result query-result}
-   :parking-lot   parking-lot})
-
-(defn slot-number-for-car-with-registration-number [query-result parking-lot]
-  {:response-code (status-codes :slot-number-for-car-with-registration-number)
-   :action        {:name         :slot-number-for-car-with-registration-number
                    :query-result query-result}
    :parking-lot   parking-lot})
