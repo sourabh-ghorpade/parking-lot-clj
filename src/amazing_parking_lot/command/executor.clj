@@ -27,27 +27,6 @@
     {:message     message
      :parking-lot (:parking-lot leave-result)}))
 
-(defn- registration-numbers-for-cars-with-colour [command-arguments]
-  (let [query-result (parking-lot/registration-numbers-for-cars-with-colour (first (option/arguments command-arguments))
-                                                                            (option/parking-lot command-arguments))
-        message (message-generator/generate-message (:response-code query-result) (:action query-result))]
-    {:message     message
-     :parking-lot (:parking-lot query-result)}))
-
-(defn slot-numbers-for-cars-with-colour [command-arguments]
-  (let [query-result (parking-lot/slot-numbers-for-cars-with-colour (first (option/arguments command-arguments))
-                                                                    (option/parking-lot command-arguments))
-        message (message-generator/generate-message (:response-code query-result) (:action query-result))]
-    {:message     message
-     :parking-lot (:parking-lot query-result)}))
-
-(defn slot-number-for-registration-number [command-arguments]
-  (let [query-result (parking-lot/slot-number-for-registration-number (first (option/arguments command-arguments))
-                                                                      (option/parking-lot command-arguments))
-        message (message-generator/generate-message (:response-code query-result) (:action query-result))]
-    {:message     message
-     :parking-lot (:parking-lot query-result)}))
-
 (defn- query-executor [command command-arguments]
   (let [query-result (command (first (option/arguments command-arguments))
                               (option/parking-lot command-arguments))

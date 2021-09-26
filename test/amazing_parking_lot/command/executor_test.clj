@@ -1,7 +1,6 @@
 (ns amazing-parking-lot.command.executor-test
   (:require [clojure.test :refer :all]
             [amazing-parking-lot.command.executor :refer :all]
-            [amazing-parking-lot.models.parking-lot :as parking-lot]
             [amazing-parking-lot.input.command-argument-option :refer :all]
             [amazing-parking-lot.models.event :as event]
             [amazing-parking-lot.models.car :as car]))
