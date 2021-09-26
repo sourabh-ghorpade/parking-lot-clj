@@ -3,9 +3,6 @@
 (defn message [option]
   (:message option))
 
-(defn response-code [option]
-  (:response-code option))
-
 (defn command [option]
   (:command option))
 
@@ -25,13 +22,6 @@
    {:command     (command option)
     :arguments   (arguments option)
     :message      message
-    :parking-lot parking-lot
-    :valid?      true})
-  ([option message response-code parking-lot]
-   {:command     (command option)
-    :arguments   (arguments option)
-    :message      message
-    :response-code response-code
     :parking-lot parking-lot
     :valid?      true}))
 

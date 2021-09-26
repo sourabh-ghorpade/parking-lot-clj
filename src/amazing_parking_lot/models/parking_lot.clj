@@ -3,9 +3,8 @@
             [amazing-parking-lot.models.event :as event]))
 
 (defn create [number-of-slots]
-  (let [parking-lot {:number-of-slots number-of-slots
-                     :slots           (vec (repeat number-of-slots nil))}]
-    (event/create-parking-lot-created-event parking-lot)))
+  {:number-of-slots number-of-slots
+   :slots           (vec (repeat number-of-slots nil))})
 
 ;TODO Find better way to do this in clj
 (defn remove-car [slot-number parking-lot]

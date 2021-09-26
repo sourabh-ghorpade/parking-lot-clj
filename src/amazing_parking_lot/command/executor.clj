@@ -6,11 +6,9 @@
 
 (defn- create-parking-lot [command-arguments]
   (let [number-of-slots (first (option/arguments command-arguments))
-        response (parking-lot/create (Integer/parseInt number-of-slots))
-        parking-lot (option/parking-lot response)
-        response-code (option/response-code response)
+        parking-lot (parking-lot/create (Integer/parseInt number-of-slots))
         message (str "Created parking lot with " number-of-slots " slots")]
-    (option/create-valid-option command-arguments message response-code parking-lot)))
+    (option/create-valid-option command-arguments message parking-lot)))
 
 (defn- park [command-arguments]
   (let [licence-number (first (option/arguments command-arguments))

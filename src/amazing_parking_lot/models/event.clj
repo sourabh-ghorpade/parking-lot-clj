@@ -5,8 +5,7 @@
   {:car-parked       2
    :parking-lot-full 1
    :car-un-parked    3
-   :car-not-found 4
-   :parking-lot-created 5})
+   :car-not-found 4})
 
 (defn create-car-parked-event [action-name slot-number parked-car parking-lot]
   {:response-code (status-codes :car-parked)
@@ -25,9 +24,4 @@
    :action        {:name        :car-un-parked
                    :slot-number slot-number
                    :car         parked-car}
-   :parking-lot   parking-lot})
-
-(defn create-parking-lot-created-event [parking-lot]
-  {:response-code (status-codes :parking-lot-created)
-   :action        {:name        :parking-lot-created}
    :parking-lot   parking-lot})
